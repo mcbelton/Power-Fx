@@ -11,6 +11,7 @@ using Microsoft.PowerFx.Core.Public.Values;
 using Microsoft.PowerFx.Core.Functions;
 using Microsoft.PowerFx.Core.Public.Types;
 using System.Text.RegularExpressions;
+using System.Text.Json;
 
 namespace Microsoft.PowerFx.Functions
 {
@@ -83,7 +84,26 @@ namespace Microsoft.PowerFx.Functions
                 return DateTimeToNumber(irContext, new DateTimeValue[] { dtv });
             }
 
-            var str = ((StringValue)arg0).Value;
+            string str = null;
+            if (arg0 is CustomObjectValue cov)
+            {
+                JsonElement element = cov.Element;
+                switch (element.ValueKind)
+                {
+                    case JsonValueKind.String:
+                        str = element.GetString();
+                        break;
+                    case JsonValueKind.Number:
+                        return new NumberValue(irContext, element.GetDouble());
+                    case JsonValueKind.Null:
+                        return new BlankValue(irContext);
+                }
+            }
+
+            if (arg0 is StringValue sv)
+            {
+                str = sv.Value;
+            }
 
             if (string.IsNullOrEmpty(str))
             {

@@ -59,6 +59,7 @@ namespace Microsoft.PowerFx.Core.Types
         public static readonly DType ViewValue = new DType(DKind.ViewValue);
         public static readonly DType NamedValue = new DType(DKind.NamedValue);
         public static readonly DType MinimalLargeImage = CreateMinimalLargeImageType();
+        public static readonly DType CustomObject = new DType(DKind.CustomObject);
 
         public static readonly DType Invalid = new DType();
 
@@ -113,6 +114,7 @@ namespace Microsoft.PowerFx.Core.Types
                 { DKind.View, DKind.Error },
                 { DKind.ViewValue, DKind.Error },
                 { DKind.NamedValue, DKind.Error },
+                { DKind.CustomObject, DKind.Error },
 
             }, isThreadSafe: true);
 
@@ -501,6 +503,7 @@ namespace Microsoft.PowerFx.Core.Types
         public bool IsView => Kind == DKind.View || Kind == DKind.ViewValue;
         public bool IsAggregate => Kind == DKind.Table || Kind == DKind.Record || Kind == DKind.ObjNull;
         public bool IsPrimitive => DKind._MinPrimitive <= Kind && Kind < DKind._LimPrimitive || Kind == DKind.ObjNull;
+        public bool IsCustomObject => Kind == DKind.CustomObject;
 
         private readonly bool _isFile;
         public bool IsFile => _isFile || Kind == DKind.File;
@@ -1833,9 +1836,12 @@ namespace Microsoft.PowerFx.Core.Types
                     accepts = (type.Kind == Kind && NamedValueKind == type.NamedValueKind) ||
                               type.Kind == DKind.Unknown;
                     break;
+                case DKind.CustomObject:
+                    accepts = type.Kind == Kind;
+                    break;
                 default:
                     Contracts.Assert(false);
-                    accepts = defaultReturnValue(type);
+                    accepts = defaultReturnValue(type) || type.Kind == DKind.Unknown;
                     break;
             }
 
@@ -3478,6 +3484,8 @@ namespace Microsoft.PowerFx.Core.Types
                     return "I";
                 case DKind.NamedValue:
                     return "V";
+                case DKind.CustomObject:
+                    return "O";
             }
         }
 

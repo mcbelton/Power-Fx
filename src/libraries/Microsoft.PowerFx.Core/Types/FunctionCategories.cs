@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation.
+﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 using System;
@@ -21,5 +21,6 @@ namespace Microsoft.PowerFx.Core.Types
         Color = 0x80,
         REST = 0x100,
         Component = 0x200,
+        CustomObject = 0x400,
     }
 }

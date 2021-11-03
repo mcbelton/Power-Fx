@@ -12,5 +12,6 @@
         void Visit(TimeValue value);
         void Visit(DateValue value);
         void Visit(DateTimeValue value);
+        void Visit(CustomObjectValue value);
     }
 }

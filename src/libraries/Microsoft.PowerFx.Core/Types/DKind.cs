@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation.
+﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 namespace Microsoft.PowerFx.Core.Types
@@ -83,6 +83,8 @@ namespace Microsoft.PowerFx.Core.Types
         File = 33,
         LargeImage = 34,
 
-        _Lim = 35,
+        CustomObject = 35,
+
+        _Lim = 36,
     }
 }

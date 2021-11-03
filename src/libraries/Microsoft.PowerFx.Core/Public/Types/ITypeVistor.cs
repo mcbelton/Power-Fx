@@ -19,5 +19,6 @@ namespace Microsoft.PowerFx.Core.Public.Types
         void Visit(DateTimeNoTimeZoneType type);
         void Visit(TimeType type);
         void Visit(OptionSetValueType type);
+        void Visit(CustomObjectType type);
     }
 }
