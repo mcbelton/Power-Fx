@@ -1837,11 +1837,11 @@ namespace Microsoft.PowerFx.Core.Types
                               type.Kind == DKind.Unknown;
                     break;
                 case DKind.CustomObject:
-                    accepts = type.Kind == Kind;
+                    accepts = type.Kind == DKind.CustomObject;
                     break;
                 default:
                     Contracts.Assert(false);
-                    accepts = defaultReturnValue(type) || type.Kind == DKind.Unknown;
+                    accepts = defaultReturnValue(type);
                     break;
             }
 
